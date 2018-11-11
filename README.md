@@ -1,3 +1,3 @@
-####To see the app:
-*npm install
-*npm start
+#### To see the app:
+* npm install
+* npm start
