@@ -1,28 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {ColorComponent} from './Component.js';
+import {colorsName} from './seed.js';
 
-class App extends Component {
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        colors: colorsName,
+        bgColor: ''
+    };
+    this.handleClick = this.handleClick.bind(this);
+}
+ 
+  handleClick(color1, color2) {
+    const backgroundColor = "linear-gradient(to right, " + color1 + "," + color2 + ")";
+    
+    this.setState({ bgColor: backgroundColor });
+    console.log(backgroundColor)
+  }
   render() {
+    const showColors = this.state.colors.map(color => (
+  
+      <ColorComponent 
+        key = {'color-' + color.id}
+        id = {color.id}
+        color1 = {color.color1}
+        color2 = {color.color2}
+        onClick = {() => {
+          this.handleClick(color.color1, color.color2)
+        }}
+      />
+    
+    ))
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div style = {{ background: this.state.bgColor }} className="App">
+        { showColors }
       </div>
     );
   }
 }
 
-export default App;
+
